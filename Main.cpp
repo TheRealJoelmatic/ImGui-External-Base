@@ -1,22 +1,29 @@
-﻿#include "header Files/main.h"
+﻿#include <fcntl.h>
+#include <thread>
+
+#include "header Files/globals.hh"
+#include "header Files/main.h"
 #include "header Files/menu.hh"
 
-#include "header Files/functions/memory.h"
-
-#include "header Files/modules/teleport.h"
-
 #include "header Files/font/tahoma.h"
+#include "header Files/font/icons.h"
 
+#include "header Files/functions/memory.h"
 #include "header Files/functions/configManger.h"
-#include <fcntl.h>
+#include "header Files/functions/utils.h"
+#include "header Files/modules/teleport.h"
+#include "header Files/modules/esp.h"
 
+#include "header Files/functions/colored_cout.h"
 
+c_globals Global;
 
 // Main code
 int main()
 {
+
     hideConsole();
-    std::cout << " (                               \n";
+    std::cout << clr::blue << " (                               \n";
     std::cout << " )\\ )         (          (       \n";
     std::cout << "(()/(   (   ( )\\     (   )\\ )    \n";
     std::cout << " /(_))  )\\  )((_)    )\\ (()/     \n";
@@ -26,16 +33,17 @@ int main()
     std::cout << " |___/ |___||___/ \\___/    \\___| \n\n-----------------------------------------------------------\n";
 
 
-    std::cout << "Waiting for Refunct-Win32-Shipping.exe \n";
+    std::cout << clr::yellow << "Waiting for " + Global.processName + " \n";
 
-    if (!(FindProcess("Refunct-Win32-Shipping.exe")))
+    if (!(FindProcess(Global.processName)))
     {
-        MessageBoxA(NULL, "Failed to find Refunct ", "Confirmation", MB_OK | MB_ICONERROR);
+        MessageBoxA(NULL, "Failed to find the game", "Confirmation", MB_OK | MB_ICONERROR);
         exit(0);
     }
 
-    std::cout << "Found Refunct-Win32-Shipping.exe \n";
+    std::cout << clr::green << "Found" + Global.processName + " \n";
 
+    std::thread myThread(espThread);
     setupImgui();
 
     return 0;

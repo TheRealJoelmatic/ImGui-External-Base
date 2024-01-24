@@ -70,7 +70,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)\build\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)\build\$(Configuration)\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -132,12 +137,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="functions\other\colored_cout.cpp" />
     <ClCompile Include="functions\configManger.cpp" />
-    <ClCompile Include="functions\keyboard.cpp" />
+    <ClCompile Include="functions\input\keyboard.cpp" />
     <ClCompile Include="functions\memory.cpp" />
-    <ClCompile Include="functions\mouse.cpp" />
+    <ClCompile Include="functions\input\mouse.cpp" />
     <ClCompile Include="functions\utils.cpp" />
-    <ClCompile Include="menu\menu.cc" />
+    <ClCompile Include="menu\menu.cpp" />
     <ClCompile Include="header Files\imgui\imgui.cpp" />
     <ClCompile Include="header Files\imgui\imgui_demo.cpp" />
     <ClCompile Include="header Files\imgui\imgui_draw.cpp" />
@@ -146,13 +152,17 @@
     <ClCompile Include="header Files\imgui\imgui_tables.cpp" />
     <ClCompile Include="header Files\imgui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="modules\esp.cpp" />
     <ClCompile Include="modules\teleport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header Files\font\tahoma.h" />
+    <ClInclude Include="header Files\functions\colored_cout.h" />
     <ClInclude Include="header Files\functions\configManger.h" />
+    <ClInclude Include="header Files\functions\keyboard.h" />
     <ClInclude Include="header Files\functions\keys.h" />
     <ClInclude Include="header Files\functions\memory.h" />
+    <ClInclude Include="header Files\functions\mouse.h" />
     <ClInclude Include="header Files\functions\utils.h" />
     <ClInclude Include="header Files\globals.hh" />
     <ClInclude Include="header Files\font\custom.h" />
@@ -162,6 +172,7 @@
     <ClInclude Include="header Files\json\nlohmann\json.hpp" />
     <ClInclude Include="header Files\json\nlohmann\json_fwd.hpp" />
     <ClInclude Include="header Files\menu.hh" />
+    <ClInclude Include="header Files\modules\esp.h" />
     <ClInclude Include="header Files\modules\teleport.h" />
     <ClInclude Include="header Files\imgui\imconfig.h" />
     <ClInclude Include="header Files\imgui\imgui.h" />
@@ -172,6 +183,7 @@
     <ClInclude Include="header Files\imgui\imstb_textedit.h" />
     <ClInclude Include="header Files\imgui\imstb_truetype.h" />
     <ClInclude Include="header Files\main.h" />
+    <ClInclude Include="header Files\offsets.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="img\61317179.png" />
