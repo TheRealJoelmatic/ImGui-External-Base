@@ -1,0 +1,13 @@
+﻿  esp.cpp
+C:\Users\Joel Matic\Desktop\ImGui-External-Base-main\ImGui-External-Base-main\modules\esp.cpp(181,24): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Joel Matic\Desktop\ImGui-External-Base-main\ImGui-External-Base-main\modules\esp.cpp(181,16): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Joel Matic\Desktop\ImGui-External-Base-main\ImGui-External-Base-main\modules\esp.cpp(182,24): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Joel Matic\Desktop\ImGui-External-Base-main\ImGui-External-Base-main\modules\esp.cpp(182,18): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Generating code
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
+C:\Users\Joel Matic\Desktop\ImGui-External-Base-main\ImGui-External-Base-main\modules\teleport.cpp(64): warning C4715: 'getCurrentLocation': not all control paths return a value
+  All 3793 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  ImGui Loader Base.vcxproj -> C:\Users\Joel Matic\Desktop\ImGui-External-Base-main\ImGui-External-Base-main\build\Release\Base.exe
+  'pwsh.exe' is not recognized as an internal or external command,
+  operable program or batch file.
