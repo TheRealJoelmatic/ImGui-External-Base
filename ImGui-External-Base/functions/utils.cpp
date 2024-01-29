@@ -1,12 +1,13 @@
 #include "../header Files/menu.hh"
 #include "../header Files/functions/utils.h"
+#include "../header Files/globals.hh"
 
 //
 // Debug
 //
 
 void ShowDebugInfo(const std::string& info) {
-    MessageBox(NULL, info.c_str(), "Debug Information", MB_OK | MB_ICONINFORMATION);
+    MessageBox(NULL, info.c_str(), "Information", MB_OK | MB_ICONINFORMATION);
 }
 
 //
@@ -62,4 +63,21 @@ std::vector<DWORD> addOnToVector(const std::vector<DWORD>& list, DWORD newValue)
 	std::vector<DWORD> result = list;
 	result.push_back(newValue);
 	return result;
+}
+
+//
+// ViewMatrix
+//
+
+bool isViewMatrixEmpty(const view_matrix_t& vm) {
+	// Check if all elements are close to zero (within a tolerance)
+	const float tolerance = 0.0001f;
+
+	for (int i = 0; i < 16; ++i) {
+		if (std::abs(vm.matrix[i]) > tolerance) {
+			return false;
+		}
+	}
+
+	return true;
 }

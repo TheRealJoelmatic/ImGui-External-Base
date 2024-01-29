@@ -3,6 +3,7 @@ My personal external cheat base.;
 
 # Features
 
+- Navida overlay hijack
 - DirrectX 9
 - External imGui
 - Imgui menu is customizable

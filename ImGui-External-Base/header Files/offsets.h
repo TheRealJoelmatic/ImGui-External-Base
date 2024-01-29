@@ -8,7 +8,9 @@ class c_offsets {
 public:
 	DWORD
 
-	veiwMetrix = 0x501AE8,
+	//This is the start of the veiw matrix!
+	veiwMetrix = 0x0057DEAC + 0x124,
+	nextOffset = 4,
 
 	playersLeft = 0x0005CDB4,
 

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <TlHelp32.h>
 #include <vector>
+#include <Psapi.h>
 
 #include "../header Files/functions/memory.h"
 #include "../header Files/functions/colored_cout.h"
@@ -73,10 +74,27 @@ void readMemory(HANDLE processHandle, DWORD address, void* buffer, size_t size) 
     ReadProcessMemory(processHandle, (LPCVOID)address, buffer, size, NULL);
 }
 
-view_matrix_t readViewMatrix(HANDLE processHandle, uintptr_t address) {
+view_matrix_t readViewMatrix(HANDLE processHandle, uintptr_t address, uintptr_t nextOffset) {
+
     view_matrix_t result;
 
-    ReadProcessMemory(processHandle, reinterpret_cast<LPCVOID>(address), &result, sizeof(view_matrix_t), nullptr);
+    //std::cout << "View Matrix:" << std::endl;
+    for (int i = 0; i < 16; ++i) {
+        float currentValue;
+        uintptr_t currentAdress = address + i * nextOffset;
+
+        ReadProcessMemory(processHandle, reinterpret_cast<LPCVOID>(currentAdress), &currentValue, sizeof(currentValue), nullptr);
+
+        if (currentValue == NULL) {
+            std::cout << clr::red << "FAILED TO READ THE VEIW MATRIX (" << i << ")" << std::endl;
+            view_matrix_t failedResult = {};
+            return failedResult;
+        }
+
+        result.matrix[i] = currentValue;
+
+        //std::cout << clr::yellow << i << " | Read " << currentAdress << " | " << result.matrix[i] << std::endl;
+    }
 
     return result;
 }
@@ -141,6 +159,7 @@ DWORD getBaseAddress(HANDLE processHandle, std::string& processName) {
 
     DWORD baseAddress = GetModuleBaseAddress(processHandle, processName);
 
+
     if (baseAddress == 0) {
         std::cerr << "Failed to get module base address" << std::endl;
         CloseHandle(processHandle);
@@ -150,6 +169,42 @@ DWORD getBaseAddress(HANDLE processHandle, std::string& processName) {
     return baseAddress;
 }
 
+BOOL CALLBACK enum_windows(HWND hwnd, LPARAM param) {
+    DWORD process_id;
+    GetWindowThreadProcessId(hwnd, &process_id);
+    if (process_id == param)
+    {
+        sdk.hwnd = hwnd;
+        return false;
+    }
+    return true;
+}
+
+DWORD GetPIDByModuleName(const char* moduleName) {
+    DWORD processIds[1024], cbNeeded, count;
+    if (EnumProcesses(processIds, sizeof(processIds), &cbNeeded)) {
+        count = cbNeeded / sizeof(DWORD);
+        for (DWORD i = 0; i < count; ++i) {
+            HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processIds[i]);
+            if (hProcess != NULL) {
+                HMODULE hMod;
+                DWORD cbNeeded;
+
+                if (EnumProcessModules(hProcess, &hMod, sizeof(hMod), &cbNeeded)) {
+                    char szModName[MAX_PATH];
+                    if (GetModuleBaseNameA(hProcess, hMod, szModName, sizeof(szModName) / sizeof(char))) {
+                        if (strstr(szModName, moduleName) != nullptr) {
+                            CloseHandle(hProcess);
+                            return processIds[i];
+                        }
+                    }
+                }
+                CloseHandle(hProcess);
+            }
+        }
+    }
+    return 0; // Not found
+}
 //
 // Misc
 //

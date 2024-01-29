@@ -158,6 +158,12 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="modules\esp.cpp" />
     <ClCompile Include="modules\teleport.cpp" />
+    <ClCompile Include="overlay\hijack\hijack.cpp" />
+    <ClCompile Include="overlay\renderer\colors.cpp" />
+    <ClCompile Include="overlay\renderer\fonts.cpp" />
+    <ClCompile Include="overlay\renderer\internal.cpp" />
+    <ClCompile Include="overlay\renderer\renderer.cpp" />
+    <ClCompile Include="overlay\renderer\scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header Files\font\tahoma.h" />
@@ -190,6 +196,9 @@
     <ClInclude Include="header Files\imgui\imstb_truetype.h" />
     <ClInclude Include="header Files\main.h" />
     <ClInclude Include="header Files\offsets.h" />
+    <ClInclude Include="overlay\hijack\hijack.h" />
+    <ClInclude Include="overlay\renderer\internal.h" />
+    <ClInclude Include="overlay\renderer\renderer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -15,6 +15,10 @@ class c_globals {
 
 		std::string gameName = "assaultcube";
 		std::string processName = "ac_client.exe";
+
+		int screenX;
+		int screenY;
+
 };
 
 class color_settings
@@ -26,12 +30,14 @@ class color_settings
 class c_modules {
 public:
 	bool isEspOn = false;
+	bool isCrosshairOn = false;
+
+	bool showHealth = false;
+	bool showBoxs = false;
+
+	bool showFriendlys = false;
+	bool showEnemys = false;
 };
-
-inline c_globals globals;
-inline color_settings color;
-inline c_modules modules;
-
 
 //
 //	structs
@@ -41,13 +47,31 @@ struct Vector3
 {
 	float x, y, z;
 };
-
-struct view_matrix_t {
-	float* operator[](int index) {
-		return matrix[index];
-	}
-
-	float matrix[4][4];
+struct Vector2
+{
+	float x, y;
 };
+struct view_matrix_t {
+	float matrix[16];
+};
+
+
+//
+//	SDK
+//
+
+class c_sdk {
+public:
+	DWORD baseAddress;
+	HANDLE processHandle;
+	HWND hwnd;
+	DWORD process_id;
+};
+
+
+inline c_globals globals;
+inline color_settings color;
+inline c_modules modules;
+inline c_sdk sdk;
 
 #endif

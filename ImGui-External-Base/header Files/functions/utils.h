@@ -5,6 +5,7 @@
 
 #include "../imgui/imgui.h"
 #include "../imgui/imgui_internal.h"
+#include "../globals.hh"
 
 #include <sstream>
 #include <Windows.h>
@@ -38,5 +39,11 @@ ImVec4 StrToImVec4(const std::string& str);
 //
 
 std::vector<DWORD> addOnToVector(const std::vector<DWORD>& list, DWORD newValue);
+
+//
+// View	Matrixs
+//
+
+bool isViewMatrixEmpty(const view_matrix_t& vm);
 
 #endif

@@ -1,4 +1,21 @@
-﻿#include <fcntl.h>
+﻿//
+//  My personal external cheat base Ive tried to make the code clean and easy
+//  to understand.
+// 
+//  CREDITS
+//
+//  I used these github repo for the Navida Overlay hijack
+//  https://github.com/es3n1n/nvidia-overlay-renderer/
+//  https://github.com/Autarch-s/external-warzone-cheat/
+//      
+//  I used this github repo for the base of this menu:
+//  https://github.com/Guardln/ImGui-External-Base
+// 
+// 
+
+
+
+#include <fcntl.h>
 #include <thread>
 
 #include "header Files/globals.hh"
@@ -15,12 +32,13 @@
 #include "header Files/modules/esp.h"
 
 #include "header Files/functions/colored_cout.h"
+#include "overlay/renderer/renderer.h"
 
 // Main code
 int main()
 {
-
     hideConsole();
+
     std::cout << clr::blue << " (                               \n";
     std::cout << " )\\ )         (          (       \n";
     std::cout << "(()/(   (   ( )\\     (   )\\ )    \n";
@@ -28,19 +46,47 @@ int main()
     std::cout << "(_))_  ((_)((_)_  _ ((_) /(_))_  \n";
     std::cout << " |   \\ | __|| _ )| | | |(_)) __| \n";
     std::cout << " | |) || _| | _ \\| |_| |  | (_ | \n";
-    std::cout << " |___/ |___||___/ \\___/    \\___| \n\n-----------------------------------------------------------\n";
+    std::cout << " |___/ |___||___/ \\___/    \\___| \n\n-----------------------------------------------------------\n\n";
 
 
     std::cout << clr::yellow << "Waiting for " + globals.processName + " \n";
 
     if (!(FindProcess(globals.processName)))
     {
-        MessageBoxA(NULL, "Failed to find the game", "Confirmation", MB_OK | MB_ICONERROR);
+        ShowDebugInfo("Failed to find the game " + globals.processName);
         exit(0);
     }
 
-    std::cout << clr::green << "Found" + globals.processName + " \n";
+    std::cout << clr::green << "Found: " + globals.processName + " \n";
 
+    globals.screenX = GetSystemMetrics(SM_CXSCREEN);
+    globals.screenY = GetSystemMetrics(SM_CYSCREEN);
+
+    sdk.processHandle = GetProcessHandleByName(globals.processName);
+    sdk.baseAddress = getBaseAddress(sdk.processHandle, globals.processName);
+    sdk.process_id = GetPIDByModuleName(globals.processName.c_str());
+    EnumWindows(enum_windows, (LPARAM)sdk.process_id);
+
+    // Hook Navida Overlay
+    if (!hijack::init()) {
+        ShowDebugInfo("failed to hijack nvidia overlay");
+    }
+    if (!renderer::init()) {
+        ShowDebugInfo("failed to initlize nvidia overlay  renderer");
+    }
+
+    std::cout << clr::yellow << "\n-----------------------------------------------------------\n";
+    std::cout << clr::green << "[-] PROCESS INFO" << std::endl;
+    std::cout << clr::green << " [] pid:  0x" << std::hex << sdk.process_id << std::endl;
+    std::cout << clr::green << " [] base address: 0x" << std::hex << sdk.baseAddress << std::endl;
+    std::cout << clr::green << " [] process handle:  0x" << std::hex << sdk.processHandle << std::endl;
+    std::cout << clr::green << " [] hwnd: 0x" << std::hex << sdk.hwnd << std::dec << std::endl;
+    std::cout << clr::green << "[-] SCREEN INFO" << std::endl;
+    std::cout << clr::green << " [] screen width: " << globals.screenX << std::endl;
+    std::cout << clr::green << " [] screen height: " << globals.screenY << std::endl;
+    std::cout << clr::yellow << "-----------------------------------------------------------\n\n";
+
+    //std::thread _overlayThread(renderer::scene::renderThread);
     std::thread _espThread(espThread);
     
     setupImgui();

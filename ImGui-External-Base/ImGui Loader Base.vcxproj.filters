@@ -32,6 +32,12 @@
     <ClCompile Include="modules\esp.cpp" />
     <ClCompile Include="functions\render\draw.cpp" />
     <ClCompile Include="functions\render\calculations.cpp" />
+    <ClCompile Include="overlay\hijack\hijack.cpp" />
+    <ClCompile Include="overlay\renderer\colors.cpp" />
+    <ClCompile Include="overlay\renderer\fonts.cpp" />
+    <ClCompile Include="overlay\renderer\internal.cpp" />
+    <ClCompile Include="overlay\renderer\renderer.cpp" />
+    <ClCompile Include="overlay\renderer\scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header Files\imgui\imconfig.h">
@@ -80,6 +86,9 @@
     <ClInclude Include="header Files\offsets.h" />
     <ClInclude Include="header Files\functions\render\draw.h" />
     <ClInclude Include="header Files\functions\render\calculations.h" />
+    <ClInclude Include="overlay\hijack\hijack.h" />
+    <ClInclude Include="overlay\renderer\internal.h" />
+    <ClInclude Include="overlay\renderer\renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">

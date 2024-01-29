@@ -1,13 +1,4 @@
-﻿//
-//      This is the menu of the Cheat/Trainer
-//      
-//      I used this github repo for the base of this menu:
-//      https://github.com/Guardln/ImGui-External-Base
-// 
-// 
-//      Ive tryed to make it easy to use.
-
-#include <iostream>
+﻿#include <iostream>
 
 #include "../header Files/globals.hh"
 #include "../header Files/menu.hh"
@@ -131,15 +122,29 @@ void ui::renderMenu() {
                 Indent(5);
                 SetCursorPosY(5);
                 CenterText(" ");
-                CenterText(" Other Cool Stuff ");
+                CenterText(" ESP ");
                 CenterText(" ");
 
                 Separator();
 
-                if (Button("ESP")) {
-                    modules.isEspOn = !modules.isEspOn;
-                    std::cout << clr::blue << "ESP Toggled: " << modules.isEspOn << "\n";
+                if (ImGui::Checkbox("ESP", &modules.isEspOn)) {
+                    std::cout << clr::blue << "ESP: " << modules.isEspOn << std::endl;
                 }
+                Separator();
+                if (ImGui::Checkbox("Show Enemys", &modules.showEnemys)) {
+                    std::cout << clr::blue << "Show Enemys: " << modules.showEnemys << std::endl;
+                }
+                if (ImGui::Checkbox("Show Friendlys", &modules.showFriendlys)) {
+                    std::cout << clr::blue << "Show Friendlys: " << modules.showFriendlys << std::endl;
+                }
+                Separator();
+                if (ImGui::Checkbox("2D Boxs", &modules.showBoxs)) {
+                    std::cout << clr::blue << "2D Boxs: " << modules.showBoxs << std::endl;
+                }
+                if (ImGui::Checkbox("Health", &modules.showHealth)) {
+                    std::cout << clr::blue << "Show Health: " << modules.showHealth << std::endl;
+                }
+
                 Columns(1);
 
                 ImGui::Unindent();
@@ -159,7 +164,7 @@ void ui::renderMenu() {
                 }
                 SameLine();
                 if (Button("Placeholder / Tests")) {
-                    //
+                    modules.isCrosshairOn = !modules.isCrosshairOn;
                 }
 
                 Separator();
