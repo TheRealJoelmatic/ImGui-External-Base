@@ -1,5 +1,5 @@
 # ImGui External Cheat Base
-My personal external cheat base.;
+My first ever external base
 
 # Features
 
